@@ -16,22 +16,14 @@ setxkbmap -option "ctrl:nocaps" &
 # Start a window compositor. This ensures Google Chrome paints correctly.
 xcompmgr -n &
 
+# Monitor geometry
+xrandr --output eDP-1 --below DP-1
+
 # Set a wallpaper
-feh --bg-fill ~/.wallpaper.jpg &
+feh --bg-fill ~/misc/desktop_backgrounds/ubuntu_desktop_blue-wallpaper-1920x1080.jpg
 
 # Start the system tray
 stalonetray -c ~/.xmonad/stalonetrayrc-single &
-
-# Start two terminals
-gnome-terminal &
-gnome-terminal &
-
-# Start a browser
-google-chrome &
-
-# Start screensaver
-killall gnome-screensaver &
-xscreensaver -no-splash &
 
 # Start sound server
 pulseaudio --start --log-target=syslog &

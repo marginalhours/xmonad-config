@@ -31,13 +31,6 @@ myTerminal = "/usr/bin/xfce4-terminal"
 -- The command to lock the screen or show the screensaver.
 myScreensaver = "/usr/bin/xscreensaver-command -l"
 
--- The command to take a selective screenshot, where you select
--- what you'd like to capture on the screen.
-mySelectScreenshot = "select-screenshot"
-
--- The command to take a fullscreen screenshot.
-myScreenshot = "screenshot"
-
 -- The command to use as a launcher, to launch commands that don't have
 -- preset keybindings.
 myLauncher = "$(yeganesh -x -- -fn 'monospace-16' -nb '#000000' -nf '#FFFFFF' -sb '#7C7C7C' -sf '#CEFFAC')"
@@ -156,13 +149,21 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
   , ((modMask, xK_p),
      spawn myLauncher)
 
-  -- Take a selective screenshot using the command specified by mySelectScreenshot.
-  , ((modMask .|. shiftMask, xK_p),
-     spawn mySelectScreenshot)
+  -- Take a selective screenshot
+  , ((0, xK_Print),
+     spawn "gnome-screenshot -a")
 
-  -- Take a full screenshot using the command specified by myScreenshot.
-  , ((modMask .|. controlMask .|. shiftMask, xK_p),
-     spawn myScreenshot)
+  -- Take a full screenshot 
+  , ((modMask, xK_Print),
+     spawn "gnome-screenshot")
+
+  -- Increase screen brightness
+  , ((0, xF86XK_MonBrightnessUp),
+     spawn "xbacklight + 20")
+
+  -- Decrease screen brightness
+  , ((0, xF86XK_MonBrightnessDown),
+     spawn "xbacklight - 20")
 
   -- Mute volume.
   , ((0, xF86XK_AudioMute),

@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 # Script to configure X, start common apps, and start xmonad.
 # Author: Vic Fryzel
 # https://github.com/vicfryzel/xmonad-config

@@ -34,16 +34,13 @@ For source code, or to contribute, see the
 * [xmobar 0.24.5](https://github.com/jaor/xmobar)
 * [consolekit 0.4.6](https://www.freedesktop.org/wiki/Software/ConsoleKit/)
 * [stalonetray 0.8.1](http://stalonetray.sourceforge.net/)
-* [dmenu 4.7](https://tools.suckless.org/dmenu/)
-* [yeganesh 2.5](http://dmwit.com/yeganesh/)
+* [rofi](https://github.com/davatorium/rofi/)
 * [scrot 0.8](https://en.wikipedia.org/wiki/Scrot)
 
 ### Installing requirements on [Arch Linux](https://www.archlinux.org/)
 
     sudo pacman -S xmonad xmonad-contrib xmobar stalonetray dmenu scrot \
-        cabal-install xcompmgr
-    sudo cabal update
-    cabal install --global yeganesh
+        cabal-install xcompmgr rofi
     
 Also install the [consolekit-git](https://wiki.archlinux.org/index.php/ConsoleKit)
 package from the AUR. The process for doing this is documented
@@ -53,9 +50,7 @@ package from the AUR. The process for doing this is documented
 ### Installing requirements on [Ubuntu Linux](https://www.ubuntu.com/) or [Debian Linux](https://www.debian.org)
 
     sudo aptitude install xmonad libghc-xmonad-contrib-dev xmobar stalonetray \
-        suckless-tools scrot cabal-install xcompmgr consolekit
-    sudo cabal update
-    sudo cabal install --global yeganesh
+        suckless-tools scrot rofi xcompmgr consolekit
 
 
 ## Installation

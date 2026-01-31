@@ -9,6 +9,7 @@ import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.ManageHelpers
 import XMonad.Hooks.SetWMName
+import XMonad.Hooks.EwmhDesktops
 import XMonad.Layout.Fullscreen
 import XMonad.Layout.NoBorders
 import XMonad.Layout.Spiral
@@ -169,28 +170,28 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
      spawn "xbacklight - 20")
 
   -- Mute volume.
-  , ((0, xF86XK_AudioMute),
-     spawn "amixer -q set Master toggle")
+  , ((mod1Mask, xF86XK_AudioMute),
+     spawn "pactl set-sink-mute @DEFAULT_SINK@ toggle")
 
   -- Decrease volume.
-  , ((0, xF86XK_AudioLowerVolume),
-     spawn "amixer -q set Master 5%-")
+  , ((mod1Mask, xF86XK_AudioLowerVolume),
+     spawn "pactl set-sink-volume @DEFAULT_SINK@ -5%")
 
   -- Increase volume.
-  , ((0, xF86XK_AudioRaiseVolume),
-     spawn "amixer -q set Master 5%+")
+  , ((mod1Mask, xF86XK_AudioRaiseVolume),
+     spawn "pactl set-sink-volume @DEFAULT_SINK@ +5%")
 
   -- Mute volume.
   , ((modMask .|. controlMask, xK_m),
-     spawn "amixer -q set Master toggle")
+     spawn "pactl set-sink-mute @DEFAULT_SINK@ toggle")
 
   -- Decrease volume.
   , ((modMask .|. controlMask, xK_j),
-     spawn "amixer -q set Master 5%-")
+     spawn "pactl set-sink-volume @DEFAULT_SINK@ -5%")
 
   -- Increase volume.
   , ((modMask .|. controlMask, xK_k),
-     spawn "amixer -q set Master 5%+")
+     spawn "pactl set-sink-volume @DEFAULT_SINK@ +5%")
 
   -- Audio previous.
   , ((0, 0x1008FF16),
@@ -347,25 +348,16 @@ myMouseBindings (XConfig {XMonad.modMask = modMask}) = M.fromList $
 -- per-workspace layout choices.
 --
 -- By default, do nothing.
-myStartupHook = return ()
+myStartupHook = spawn "~/.config/polybar/launch.sh --forest"
 
 
 ------------------------------------------------------------------------
 -- Run xmonad with all the defaults we set up.
 --
-main = do
-  xmproc <- spawnPipe ("xmobar " ++ myXmobarrc)
-  xmonad $ defaults {
-      logHook = dynamicLogWithPP $ xmobarPP {
-            ppOutput = hPutStrLn xmproc
-          , ppTitle = xmobarColor xmobarTitleColor "" . shorten 100
-          , ppCurrent = xmobarColor xmobarCurrentWorkspaceColor ""
-          , ppSep = "   "
-      }
-      , manageHook = manageDocks <+> myManageHook
---      , startupHook = docksStartupHook <+> setWMName "LG3D"
-      , startupHook = setWMName "LG3D"
-      , handleEventHook = docksEventHook
+main = xmonad $ ewmh $ defaults {
+      manageHook = manageDocks <+> myManageHook
+    , startupHook = myStartupHook <+> setWMName "LG3D"
+    , handleEventHook = docksEventHook
   }
 
 
